@@ -1,15 +1,13 @@
-import { hasKey, sort, isEmptyString } from './helper'
+import { hasKey, sort, isEmptyString, publish } from './helper'
 import { cacheType, cacheItem } from './interfaces'
 
 class Fire {
-  
   private cache: cacheType = {}
 
   on(evtName: string, cb: Function, priority: number = Infinity) {
+    if (isEmptyString(evtName) || !cb) throw new Error('Subscription parameters is illegal!')
 
-    if(isEmptyString(evtName) || !cb) throw new Error('Subscription parameters is illegal!')
-
-    if(!this.cache[evtName]) {
+    if (!this.cache[evtName]) {
       this.cache[evtName] = []
     }
 
@@ -20,48 +18,63 @@ class Fire {
       priority
     }
 
-    if(Number.isFinite(priority)) {
-      listeners.push(item)
-      sort(listeners)
-      return
-    }
-
     listeners.push(item)
-  }
 
-  emit(evtName?: string, data?: any) {
-
-    if(isEmptyString(evtName)) {
-      return Object.keys(this.cache).map(key => {
-        const listeners = this.cache[key]
-        return listeners.map(({ cb }) => cb && cb(data))
-      })
-    }
-
-    if(evtName && hasKey(this.cache, evtName)) {
-      const listeners = this.cache[evtName]
-      return listeners.map(({ cb }) => cb && cb(data))
+    if (Number.isFinite(priority)) {
+      sort(listeners)
     }
   }
 
-  off(evtName?: string) {
-    
-    if(!evtName) {
-      this.cache = {}
-      return
+  emit(evtName: string | Array<string>, data?: any) {
+    if (Array.isArray(evtName) && evtName.length) {
+      return evtName.map(key => ({
+        key,
+        data: publish(this.cache, key, data)
+      }))
     }
 
-    if(hasKey(this.cache, evtName)) {
-      this.cache[evtName] = []
+    if (typeof evtName === 'string' && !isEmptyString(evtName)) {
+      return {
+        key: evtName,
+        data: publish(this.cache, evtName, data)
+      }
     }
+
+    if (!evtName) {
+      return Object.keys(this.cache).map(key => ({
+        key,
+        data: publish(this.cache, key, data)
+      }))
+    }
+
+    return null
+  }
+
+  off(evtName: string, fn?: Function) {
+    if (!isEmptyString(evtName) && hasKey(this.cache, evtName)) {
+      if (!fn) {
+        return (this.cache[evtName] = [])
+      }
+
+      this.cache[evtName] = this.cache[evtName].filter(({ cb }) => cb !== fn)
+    }
+  }
+
+  destory() {
+    this.cache = {}
   }
 
   once(evtName: string, cb: Function, priority: number = Infinity) {
-    
+    const callback = (args: any) => {
+      this.off(evtName, callback)
+      cb(args)
+    }
+
+    this.on(evtName, callback, priority)
   }
 
-  curr() {
-    return this.cache
+  curr(evtName?: string) {
+    return evtName ? this.cache[evtName] : this.cache
   }
 }
 
