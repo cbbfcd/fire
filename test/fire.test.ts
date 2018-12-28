@@ -85,6 +85,43 @@ describe('Test for synchronous subscription method: fire.on() ', () => {
       key: 'test02',
       data: []
     })
+
+    fire.on('test03', function f(data: any){ return data + 'f' })
+    fire.on('test04', function g(){ return 'g' })
+    const response = fire.emit(['test03', 'test04'], 'hello')
+    expect(response).toEqual([
+      {
+        key: 'test03',
+        data: ['hellof']
+      },
+      {
+        key: 'test04',
+        data: ['g']
+      }
+    ])
+
+    fire.off(['test03', 'test04'])
+    const resp = fire.emit(['test03', 'test04'], 'hello')
+    expect(resp).toEqual([
+      {
+        key: 'test03',
+        data: []
+      },
+      {
+        key: 'test04',
+        data: []
+      }
+    ])
+    
+    const m = function m(){return 'm'}
+    const j = function j(){return 'j'}
+    const k = function k(){return 'k'}
+    fire.on('test05', m)
+    fire.on('test05', j)
+    fire.on('test05', k)
+    fire.off('test05', j)
+    const _res = fire.emit('test05')
+    expect(JSON.stringify(_res)).toEqual(JSON.stringify({key: 'test05', data: ['m', 'k']}))
   })
 
   test('test fire.once()', () => {

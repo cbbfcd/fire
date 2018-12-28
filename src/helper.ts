@@ -15,3 +15,13 @@ export const publish = (target: cacheType, key: string, data?: any) => {
     return listeners.map(({ cb }) => cb(data))
   }
 }
+
+export const unSubcribe = (key: string, cache: cacheType, fn?: Function) => {
+  if(hasKey(cache, key)){
+    if(!fn){
+      return (cache[key] = [])
+    }
+
+    cache[key] = cache[key].filter(({ cb }) => cb !== fn)
+  }
+}

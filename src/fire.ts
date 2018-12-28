@@ -1,4 +1,4 @@
-import { hasKey, sort, isEmptyString, publish } from './helper'
+import { hasKey, sort, isEmptyString, publish, unSubcribe } from './helper'
 import { cacheType, cacheItem } from './interfaces'
 
 class Fire {
@@ -47,14 +47,16 @@ class Fire {
     }
   }
 
-  off(evtName: string, fn?: Function) {
-    if (!isEmptyString(evtName) && hasKey(this.cache, evtName)) {
-      if (!fn) {
-        return (this.cache[evtName] = [])
-      }
+  off(evtName: string | Array<string>, fn?: Function) {
 
-      this.cache[evtName] = this.cache[evtName].filter(({ cb }) => cb !== fn)
+    if(Array.isArray(evtName)){
+      evtName.forEach(key => {
+        unSubcribe(key, this.cache, fn)
+      })
+      return
     }
+
+    unSubcribe(evtName, this.cache, fn)
   }
 
   destory() {
