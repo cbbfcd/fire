@@ -1,8 +1,12 @@
 {
   "name": "fire",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "a tool via publish the subscription mode",
-  "keywords": ["subscribe", "pulish", "observer"],
+  "keywords": [
+    "subscribe",
+    "pulish",
+    "observer"
+  ],
   "main": "dist/fire.umd.js",
   "module": "dist/fire.es5.js",
   "typings": "dist/types/fire.d.ts",
@@ -106,7 +110,7 @@
     "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-typescript2": "^0.18.0",
-    "semantic-release": "^15.9.16",
+    "semantic-release": "^15.13.2",
     "ts-jest": "^23.10.2",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
