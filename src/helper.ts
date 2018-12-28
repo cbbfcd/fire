@@ -14,5 +14,4 @@ export const publish = (target: cacheType, key: string, data?: any) => {
     const listeners = target[key]
     return listeners.map(({ cb }) => cb(data))
   }
-  return null
 }

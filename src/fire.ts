@@ -5,7 +5,6 @@ class Fire {
   private cache: cacheType = {}
 
   on(evtName: string, cb: Function, priority: number = Infinity) {
-    if (isEmptyString(evtName) || !cb) throw new Error('Subscription parameters is illegal!')
 
     if (!this.cache[evtName]) {
       this.cache[evtName] = []
@@ -25,8 +24,8 @@ class Fire {
     }
   }
 
-  emit(evtName: string | Array<string>, data?: any) {
-    if (Array.isArray(evtName) && evtName.length) {
+  emit(evtName?: string | Array<string>, data?: any) {
+    if (Array.isArray(evtName)) {
       return evtName.map(key => ({
         key,
         data: publish(this.cache, key, data)
@@ -46,8 +45,6 @@ class Fire {
         data: publish(this.cache, key, data)
       }))
     }
-
-    return null
   }
 
   off(evtName: string, fn?: Function) {
@@ -67,7 +64,7 @@ class Fire {
   once(evtName: string, cb: Function, priority: number = Infinity) {
     const callback = (args: any) => {
       this.off(evtName, callback)
-      cb(args)
+      return cb(args)
     }
 
     this.on(evtName, callback, priority)
