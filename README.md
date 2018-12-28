@@ -1,4 +1,4 @@
-# Fire
+# @mooyu/fire
 
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![Greenkeeper badge](https://badges.greenkeeper.io/alexjoverm/typescript-library-starter.svg)](https://greenkeeper.io/)
@@ -10,11 +10,11 @@ a tool via publish the subscription mode
 ## Usage
 
 ```js
-npm install fire -D
-yarn add fire --dev
+npm install @mooyu/fire -D
+yarn add @mooyu/fire --dev
 
 // then
-import fire from 'fire'
+import fire from '@mooyu/fire'
 ```
 
 ## API
