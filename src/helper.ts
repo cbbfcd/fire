@@ -17,11 +17,5 @@ export const publish = (target: CacheType, key: string, data?: any) => {
 }
 
 export const unSubcribe = (key: string, cache: CacheType, fn?: Function) => {
-  if(hasKey(cache, key)){
-    if(!fn){
-      return (cache[key] = [])
-    }
-
-    cache[key] = cache[key].filter(({ cb }) => cb !== fn)
-  }
+  hasKey(cache, key) && (cache[key] = !fn ? [] : cache[key].filter(({ cb }) => cb !== fn))
 }

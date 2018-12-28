@@ -5,7 +5,6 @@ class Fire {
   private cache: CacheType = {}
 
   on(evtName: string, cb: Function, priority: number = Infinity) {
-
     if (!this.cache[evtName]) {
       this.cache[evtName] = []
     }
@@ -39,17 +38,17 @@ class Fire {
       }
     }
 
-    if (!evtName) {
-      return Object.keys(this.cache).map(key => ({
+    return (
+      !evtName &&
+      Object.keys(this.cache).map(key => ({
         key,
         data: publish(this.cache, key, data)
       }))
-    }
+    )
   }
 
   off(evtName: string | Array<string>, fn?: Function) {
-
-    if(Array.isArray(evtName)){
+    if (Array.isArray(evtName)) {
       evtName.forEach(key => {
         unSubcribe(key, this.cache, fn)
       })
