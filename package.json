@@ -13,7 +13,11 @@
   "files": [
     "dist"
   ],
-  "author": "cbbfcd",
+  "author": {
+    "name": "cbbfcd",
+    "url": "https://github.com/cbbfcd",
+    "email": "2890636389@qq.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/cbbfcd/fire"
