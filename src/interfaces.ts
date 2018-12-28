@@ -1,13 +1,13 @@
-interface cacheItem {
+interface CacheItem {
   priority: number,
   cb: Function
 }
 
-interface cacheType {
-  [propName: string]: Array<cacheItem>
+interface CacheType {
+  [propName: string]: Array<CacheItem>
 }
 
 export {
-  cacheType,
-  cacheItem
+  CacheType,
+  CacheItem
 }

@@ -1,8 +1,8 @@
 import { hasKey, sort, isEmptyString, publish, unSubcribe } from './helper'
-import { cacheType, cacheItem } from './interfaces'
+import { CacheType, CacheItem } from './interfaces'
 
 class Fire {
-  private cache: cacheType = {}
+  private cache: CacheType = {}
 
   on(evtName: string, cb: Function, priority: number = Infinity) {
 
@@ -12,7 +12,7 @@ class Fire {
 
     const listeners = this.cache[evtName]
 
-    const item: cacheItem = {
+    const item: CacheItem = {
       cb,
       priority
     }
