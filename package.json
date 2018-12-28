@@ -1,6 +1,6 @@
 {
   "name": "fire",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "a tool via publish the subscription mode",
   "keywords": ["subscribe", "pulish", "observer"],
   "main": "dist/fire.umd.js",

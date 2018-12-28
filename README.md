@@ -47,7 +47,7 @@ fire.emit(evtName?: string | Array<string>, data?: any) : Array
 
 ```js
 // cacel the subscribtion
-fire.off(evtName: string, fn?: Function)
+fire.off(evtName: string| Array<string>, fn?: Function)
 ```
 5. fire.destory
 
