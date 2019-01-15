@@ -1,4 +1,4 @@
-import { hasKey, sort, isEmptyString, publish, unSubcribe } from './helper'
+import { sort, isEmptyString, publish, unSubcribe } from './helper'
 import { CacheType, CacheItem } from './interfaces'
 
 class Fire {
